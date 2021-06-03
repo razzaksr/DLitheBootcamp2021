@@ -2,13 +2,20 @@ package application.console.dlithe.bootcamp.DLitheConsole.model;
 
 import java.util.Arrays;
 // business class/ Model class
-public class Assembly
+public class Assembly implements Comparable<Assembly>
 {
 	private Integer assembyNumber, assemblyPopulation;
 	private String assemblyName, assemblyMemberName;
 	private String[] assemblyIssues;
 	private Long assemblyContact;
-	
+	@Override
+	public int compareTo(Assembly o) 
+	{
+		//return this.assembyNumber.compareTo(o.assembyNumber);
+		//return this.assemblyName.compareTo(o.assemblyName);
+		//return this.assemblyMemberName.compareTo(o.assemblyMemberName);
+		return o.assemblyPopulation.compareTo(this.assemblyPopulation);
+	}
 	public Assembly() {
 		super();
 		// TODO Auto-generated constructor stub
