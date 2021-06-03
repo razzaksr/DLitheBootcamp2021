@@ -27,12 +27,20 @@ public class App
         Assembly assembly4=new Assembly(34,312903,"Bangalore East","Oliver",new String[] {"Agriculture","Traffic","Pollution"},87656787634L);
         record.createNewRecord(assembly1);record.createNewRecord(assembly2);record.createNewRecord(assembly3);
         record.createNewRecord(assembly4);
+        //Assembly assembly5=null;
+        //record.createNewRecord(assembly5);
         
-        //System.out.println(record);
+        System.out.println(record);
+        
+        //System.out.println(record.readOne(10));
+        
+        //System.out.println(record.readOne("Ujire"));
         
         
+        System.out.println(record.delete(10));
         
-        System.out.println("Tell us user name: ");
+        
+        /*System.out.println("Tell us user name: ");
         String user=scanner.next();
         System.out.println("Tell us password: ");
         String pass=scanner.next();
@@ -98,7 +106,7 @@ public class App
         }
         else {
         	System.out.println("Invalid credentials");
-        }
+        }*/
         
         scanner.close();
     }

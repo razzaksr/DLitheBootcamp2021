@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import application.console.dlithe.bootcamp.DLitheConsole.model.Assembly;
+import application.console.dlithe.bootcamp.DLitheConsole.model.AssemblyException;
 import application.console.dlithe.bootcamp.DLitheConsole.remote.AssemblyWorks;
 
 public class Record implements AssemblyWorks
@@ -17,8 +18,40 @@ public class Record implements AssemblyWorks
 	@Override
 	public void createNewRecord(Assembly object) 
 	{
-		data.add(object);
-		System.out.println(object.getAssemblyName()+" has added to the record");
+		try
+		{
+			data.add(object);
+			System.out.println(object.getAssemblyName()+" has added to the record");
+		}
+		catch(NullPointerException nullpoint)
+		{
+			System.out.println(nullpoint);
+			System.out.println("Need to provide valid details in order to add to the records");
+			data.remove(object);
+			object=new Assembly();// initialize>> allocating
+			System.out.println("Assembly number: ");
+			object.setAssembyNumber(scanner.nextInt());
+			System.out.println("Assembly population: ");
+			object.setAssemblyPopulation(scanner.nextInt());
+			System.out.println("Assembly name: ");
+			object.setAssemblyName(scanner.next());
+			System.out.println("Assembly member name: ");
+			object.setAssemblyMemberName(scanner.next());
+			System.out.println("Tell us how many issues in "+object.getAssemblyName());
+        	Integer count=scanner.nextInt();//4
+        	String[] tmp=new String[count];
+        	System.out.println("Tell us "+count+" of issues one by one: ");
+        	for(int index=0;index<count;index++)
+        	{
+        		tmp[index]=scanner.next();
+        	}
+        	object.setAssemblyIssues(tmp);
+        	System.out.println("Assembly contact: ");
+        	object.setAssemblyContact(scanner.nextLong());
+			
+			data.add(object);
+			System.out.println(object.getAssemblyName()+" has added to the record");
+		}
 	}
 
 	@Override
@@ -37,40 +70,96 @@ public class Record implements AssemblyWorks
 
 	@Override
 	public Assembly readOne(Integer number) {
+		System.out.println("Finding assembly matches "+number);
 		Assembly temp=null;
+		Boolean state=false;
 		// TODO Auto-generated method stub
-		Iterator<Assembly> it=data.iterator();
-		while(it.hasNext())
+		try
 		{
-			temp=it.next();
-			if(temp.getAssembyNumber()==number)
+			Iterator<Assembly> it=data.iterator();
+			while(it.hasNext())
+			{
+				temp=it.next();
+				if(temp.getAssembyNumber()==number)
+				{
+					state=true;
+					//return temp;
+					break;
+				}
+			}
+			if(state)
 			{
 				return temp;
 			}
+			else
+			{
+				throw new AssemblyException();
+			}
 		}
-		return null;
+		catch(AssemblyException exp)
+		{
+			System.out.println(exp);
+			System.out.println(number+" is not in the list enter it once again:");
+			number=scanner.nextInt();
+			Iterator<Assembly> it=data.iterator();
+			while(it.hasNext())
+			{
+				temp=it.next();
+				if(temp.getAssembyNumber()==number)
+				{
+					state=true;
+					//return temp;
+					break;
+				}
+			}
+			if(state)
+			{
+				return temp;
+			}
+			else
+			{
+				return null;
+			}
+		}
 	}
 	@Override
 	public Assembly readOne(String name) 
 	{
+		System.out.println("Finding assembly matches name "+name);
 		// TODO Auto-generated method stub
 		Assembly temp=null;
-		// TODO Auto-generated method stub
-		Iterator<Assembly> it=data.iterator();
-		while(it.hasNext())
+		Boolean state=false;
+		try
 		{
-			temp=it.next();
-			if(temp.getAssemblyName().equalsIgnoreCase(name))
+			// TODO Auto-generated method stub
+			Iterator<Assembly> it=data.iterator();
+			while(it.hasNext())
 			{
+				temp=it.next();
+				if(temp.getAssemblyName().equalsIgnoreCase(name))
+				{
+					state=true;break;
+				}
+			}
+			if(state)
 				return temp;
+			else
+			{
+				throw new AssemblyException();
 			}
 		}
-		return null;
+		catch(AssemblyException exp)
+		{
+			System.out.println(exp);
+			System.out.println(name+" is not matching with the record enter it once again:");
+			name=scanner.next();
+			return readOne(name);
+		}
 	}
 	@Override
 	public String readOne(Integer population, String Issue) {
 		// TODO Auto-generated method stub
-		System.out.println("Finding assemblies matches "+population+" popluation and issue: "+Issue);
+		System.out.println("Finding assemblies matches "+population+" population and issue: "+Issue);
 		Assembly temp=null;
 		String hai="";
 		// TODO Auto-generated method stub
@@ -90,17 +179,49 @@ public class Record implements AssemblyWorks
 	@Override
 	public String delete(Integer number) 
 	{
+		System.out.println("Trying to delete assembly by number: "+number);
+		Boolean state=false;
 		Assembly yet=null;
-		for(Assembly tmp:data)
+		try
 		{
-			if(tmp.getAssembyNumber()==number)
+			for(Assembly tmp:data)
 			{
-				yet=tmp;break;
+				if(tmp.getAssembyNumber()==number)
+				{
+					state=true;
+					yet=tmp;break;
+				}
+			}
+			if(state) {
+				String name=yet.getAssemblyName();
+				data.remove(yet);
+				return name+" has deleted from the record";
+			}
+			else {
+				throw new AssemblyException();
 			}
 		}
-		String name=yet.getAssemblyName();
-		data.remove(yet);
-		return name;
+		catch(AssemblyException ex)
+		{
+			System.out.println(ex+"\nEnter the correct number to delete: ");
+			number=scanner.nextInt();
+			for(Assembly tmp:data)
+			{
+				if(tmp.getAssembyNumber()==number)
+				{
+					state=true;
+					yet=tmp;break;
+				}
+			}
+			if(state) {
+				String name=yet.getAssemblyName();
+				data.remove(yet);
+				return name+" has deleted from the record";
+			}
+			else {
+				return "Chances are over and Couldn't complete the deletion";
+			}
+		}
 	}
 
 	@Override
