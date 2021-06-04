@@ -1,8 +1,11 @@
 package application.console.dlithe.bootcamp.DLitheConsole.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,11 +31,13 @@ public class Record implements AssemblyWorks
 		ObjectOutputStream oos;
 		try
 		{
-			data.add(object);
+			//data.add(object);
 			fos=new FileOutputStream(file);
 			oos=new ObjectOutputStream(fos);
 			System.out.println(object.getAssemblyName()+" has added to the record");
 			oos.writeObject(object);
+			fos.close();
+			oos.close();
 		}
 		catch(NullPointerException nullpoint)
 		{
@@ -60,12 +65,14 @@ public class Record implements AssemblyWorks
         	System.out.println("Assembly contact: ");
         	object.setAssemblyContact(scanner.nextLong());
 			
-			data.add(object);
+			//data.add(object);
 			try {
 				fos=new FileOutputStream(file);
 				oos=new ObjectOutputStream(fos);
 				System.out.println(object.getAssemblyName()+" has added to the record");
 				oos.writeObject(object);
+				fos.close();
+				oos.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -80,22 +87,21 @@ public class Record implements AssemblyWorks
 	@Override
 	public String toString()
 	{
-		try {
-			return FileUtils.readFileToString(file);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		/*
+		 * String hai=""; Boolean just=true; ArrayList<Object> hi=new
+		 * ArrayList<Object>(); while(just) { try(ObjectInputStream ois=new
+		 * ObjectInputStream(new FileInputStream(file))) { Object obj=ois.readObject();
+		 * if(obj!=null) { hi.add(obj); } else { just=false; } } catch (IOException e) {
+		 * // TODO Auto-generated catch block e.printStackTrace(); } catch
+		 * (ClassNotFoundException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } } return hi.toString();
+		 */
+		/*
+		 * Collections.sort(data); //System.out.println(data); String hai="";
+		 * System.out.println("Listing all the assembly records"); for(Assembly
+		 * ptr:data) { hai+=ptr+"\n"; } return hai;
+		 */
 		return "";
-		/*Collections.sort(data);
-		//System.out.println(data);
-		String hai="";
-		System.out.println("Listing all the assembly records");
-		for(Assembly ptr:data)
-		{
-			hai+=ptr+"\n";
-		}
-		return hai;*/
 	}
 
 	@Override

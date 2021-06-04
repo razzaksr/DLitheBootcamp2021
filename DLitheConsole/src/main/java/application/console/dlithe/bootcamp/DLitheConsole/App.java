@@ -30,7 +30,7 @@ public class App
         //Assembly assembly5=null;
         //record.createNewRecord(assembly5);
         
-        //System.out.println(record);
+        System.out.println(record);
         
         //System.out.println(record.readOne(10));
         
