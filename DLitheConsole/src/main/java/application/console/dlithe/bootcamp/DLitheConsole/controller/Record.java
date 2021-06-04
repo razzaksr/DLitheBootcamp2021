@@ -21,9 +21,14 @@ import application.console.dlithe.bootcamp.DLitheConsole.remote.AssemblyWorks;
 
 public class Record implements AssemblyWorks
 {
-	private ArrayList<Assembly> data=new ArrayList<Assembly>();
+	private ArrayList<Assembly> data;
 	private Scanner scanner=new Scanner(System.in);
-	private File file=new File("C:\\Users\\ADMIN\\git\\DLitheBoot2021\\DLitheConsole\\assembly.doc");
+	private File file;
+	public Record()
+	{
+		data=new ArrayList<Assembly>();
+		file=new File("C:\\Users\\ADMIN\\git\\DLitheBoot2021\\DLitheConsole\\assembly.doc");
+	}
 	@Override
 	public void createNewRecord(Assembly object) 
 	{
@@ -31,11 +36,11 @@ public class Record implements AssemblyWorks
 		ObjectOutputStream oos;
 		try
 		{
-			//data.add(object);
+			data.add(object);
 			fos=new FileOutputStream(file);
 			oos=new ObjectOutputStream(fos);
 			System.out.println(object.getAssemblyName()+" has added to the record");
-			oos.writeObject(object);
+			oos.writeObject(data);
 			fos.close();
 			oos.close();
 		}
@@ -87,15 +92,28 @@ public class Record implements AssemblyWorks
 	@Override
 	public String toString()
 	{
-		/*
-		 * String hai=""; Boolean just=true; ArrayList<Object> hi=new
-		 * ArrayList<Object>(); while(just) { try(ObjectInputStream ois=new
-		 * ObjectInputStream(new FileInputStream(file))) { Object obj=ois.readObject();
-		 * if(obj!=null) { hi.add(obj); } else { just=false; } } catch (IOException e) {
-		 * // TODO Auto-generated catch block e.printStackTrace(); } catch
-		 * (ClassNotFoundException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } } return hi.toString();
-		 */
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
+		String hai="";
+		try {
+			fis = new FileInputStream(file);
+			ois=new ObjectInputStream(fis);
+			ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
+			fis.close();
+			ois.close();
+			for(Assembly tmp:hi)
+			{
+				hai+=tmp;
+			}
+			return hai;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		/*
 		 * Collections.sort(data); //System.out.println(data); String hai="";
 		 * System.out.println("Listing all the assembly records"); for(Assembly
