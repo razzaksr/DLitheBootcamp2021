@@ -30,17 +30,21 @@ public class App
         //Assembly assembly5=null;
         //record.createNewRecord(assembly5);
         
-        System.out.println(record);
+        //System.out.println(record);
         
         //System.out.println(record.readOne(10));
         
         //System.out.println(record.readOne("Ujire"));
         
         
-        System.out.println(record.delete(10));
+        //System.out.println(record.delete(10));
+        
+        //System.out.println(record.readOne(1000000, "Drianage", 1));
+        
+        //record.update(100, 1);
         
         
-        /*System.out.println("Tell us user name: ");
+        System.out.println("Tell us user name: ");
         String user=scanner.next();
         System.out.println("Tell us password: ");
         String pass=scanner.next();
@@ -96,9 +100,20 @@ public class App
                 		int pop=scanner.nextInt();
                 		System.out.println("Tell us issue: ");
                 		String is=scanner.next();
-                		System.out.println(record.readOne(pop,is));
+                		System.out.println(record.readOne(pop,is,1));
                 	}
                 	break;
+                case "delete":
+                	System.out.println("Deleting assembly based on Assembly number: ");
+                	int num=scanner.nextInt();
+                	System.out.println(record.delete(num));
+                	break;
+                case "update":
+                	System.out.println("Updating assembly based on Assembly number: ");
+                	int digit=scanner.nextInt();
+                	record.update(digit,1);
+                	break;
+                default:System.out.println(process+" not match with any operation");
                 }
                 System.out.println("Do wish to continue(true/false): ");
                 more=scanner.nextBoolean();
@@ -106,7 +121,7 @@ public class App
         }
         else {
         	System.out.println("Invalid credentials");
-        }*/
+        }
         
         scanner.close();
     }

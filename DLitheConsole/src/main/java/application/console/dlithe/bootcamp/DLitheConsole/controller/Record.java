@@ -157,23 +157,45 @@ public class Record implements AssemblyWorks
 		}
 	}
 	@Override
-	public String readOne(Integer population, String Issue) {
+	public String readOne(Integer population, String Issue, int count) {
 		// TODO Auto-generated method stub
-		System.out.println("Finding assemblies matches "+population+" population and issue: "+Issue);
-		Assembly temp=null;
-		String hai="";
-		// TODO Auto-generated method stub
-		Iterator<Assembly> it=data.iterator();
-		while(it.hasNext())
+		try
 		{
-			temp=it.next();
-			if(Arrays.toString(temp.getAssemblyIssues()).contains(Issue)&&temp.getAssemblyPopulation()>=population)
+			System.out.println("Finding assemblies matches "+population+" population and issue: "+Issue);
+			Assembly temp=null;
+			Boolean dlithe=false;
+			String hai="";
+			// TODO Auto-generated method stub
+			Iterator<Assembly> it=data.iterator();
+			while(it.hasNext())
 			{
-				//return temp;
-				hai+=temp+"\n";
+				temp=it.next();
+				if(Arrays.toString(temp.getAssemblyIssues()).contains(Issue)&&temp.getAssemblyPopulation()>=population)
+				{
+					//return temp;
+					dlithe=true;
+					hai+=temp+"\n";
+				}
+			}
+			if(dlithe)
+			{
+				return hai;
+			}
+			else {
+				throw new AssemblyException();
 			}
 		}
-		return hai;
+		catch(AssemblyException obj)
+		{
+			System.out.println(obj+"\nEnter the Population and issue once again: ");
+			int pop=scanner.nextInt();
+			String is=scanner.next();
+			count++;
+			if(count<3)
+				return readOne(pop, is, count);
+			else
+				return "Maximum chances used so can't continue the process";
+		}
 	}
 
 	@Override
@@ -225,30 +247,54 @@ public class Record implements AssemblyWorks
 	}
 
 	@Override
-	public void update(Integer number) 
+	public void update(Integer number,int count) 
 	{
-		for(Assembly ptr:data)
+		Boolean state=false;
+		Assembly yet=null;
+		try
 		{
-			if(ptr.getAssembyNumber()==number)
+			System.out.println("Trying to update assembly "+number);
+			for(Assembly ptr:data)
 			{
-				System.out.println("Tell us what you wish to update in the "+ptr.getAssemblyName());
-				String aspect=scanner.nextLine();// population
+				if(ptr.getAssembyNumber()==number)
+				{
+					state=true;yet=ptr;
+					break;
+				}
+			}
+			if(state)
+			{
+				System.out.println("Tell us what you wish to update in the "+yet.getAssemblyName());
+				String aspect=scanner.next();// population
 				switch(aspect)
 				{
 				case "population":
-					System.out.println("Tell us new population value in the "+ptr.getAssemblyName());
+					System.out.println("Tell us new population value in the "+yet.getAssemblyName());
 					Integer newone=scanner.nextInt();
-					ptr.setAssemblyPopulation(newone);
-					System.out.println(ptr.getAssemblyName()+" has updated the "+aspect);
+					yet.setAssemblyPopulation(newone);
+					System.out.println(yet.getAssemblyName()+" has updated the "+aspect);
 					return;
 				case "contact":
-					System.out.println("Tell us new contact number for the "+ptr.getAssemblyName());
+					System.out.println("Tell us new contact number for the "+yet.getAssemblyName());
 					Long mobile=scanner.nextLong();
-					ptr.setAssemblyContact(mobile);
-					System.out.println(ptr.getAssemblyName()+" has updated the "+aspect);
+					yet.setAssemblyContact(mobile);
+					System.out.println(yet.getAssemblyName()+" has updated the "+aspect);
 					return;
 				}
 			}
+			else {
+				throw new AssemblyException();
+			}
+		}
+		catch(AssemblyException obj)
+		{
+			System.out.println(obj+"\nNumber is not valid");
+			int no=scanner.nextInt();
+			count++;
+			if(count<=3)
+				update(no,count);
+			else
+				System.out.println("Chances are over and Couldn't complete the updation");
 		}
 	}
 }

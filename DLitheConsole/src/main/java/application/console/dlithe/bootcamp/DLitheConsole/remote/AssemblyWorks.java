@@ -8,7 +8,7 @@ public interface AssemblyWorks
 	public String toString();
 	public Assembly readOne(Integer number);
 	public Assembly readOne(String name);
-	public String readOne(Integer population, String Issue);
+	public String readOne(Integer population, String Issue, int count);
 	public String delete(Integer number);
-	public void update(Integer number);
+	public void update(Integer number,int count);
 }
