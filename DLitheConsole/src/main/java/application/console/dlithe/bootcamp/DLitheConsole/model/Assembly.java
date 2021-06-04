@@ -1,8 +1,9 @@
 package application.console.dlithe.bootcamp.DLitheConsole.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 // business class/ Model class
-public class Assembly implements Comparable<Assembly>
+public class Assembly implements Comparable<Assembly>, Serializable
 {
 	private Integer assembyNumber, assemblyPopulation;
 	private String assemblyName, assemblyMemberName;
@@ -36,7 +37,7 @@ public class Assembly implements Comparable<Assembly>
 	public String toString() {
 		return "Assembly [assembyNumber=" + assembyNumber + ", assemblyPopulation=" + assemblyPopulation
 				+ ", assemblyName=" + assemblyName + ", assemblyMemberName=" + assemblyMemberName + ", assemblyIssues="
-				+ Arrays.toString(assemblyIssues) + ", assemblyContact=" + assemblyContact + "]";
+				+ Arrays.toString(assemblyIssues) + ", assemblyContact=" + assemblyContact + "]\n";
 	}
 	
 	public Integer getAssembyNumber() {

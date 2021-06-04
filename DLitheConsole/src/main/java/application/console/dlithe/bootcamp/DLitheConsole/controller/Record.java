@@ -1,10 +1,16 @@
 package application.console.dlithe.bootcamp.DLitheConsole.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Scanner;
+
+import org.apache.commons.io.FileUtils;
 
 import application.console.dlithe.bootcamp.DLitheConsole.model.Assembly;
 import application.console.dlithe.bootcamp.DLitheConsole.model.AssemblyException;
@@ -14,14 +20,19 @@ public class Record implements AssemblyWorks
 {
 	private ArrayList<Assembly> data=new ArrayList<Assembly>();
 	private Scanner scanner=new Scanner(System.in);
-
+	private File file=new File("C:\\Users\\ADMIN\\git\\DLitheBoot2021\\DLitheConsole\\assembly.doc");
 	@Override
 	public void createNewRecord(Assembly object) 
 	{
+		FileOutputStream fos;
+		ObjectOutputStream oos;
 		try
 		{
 			data.add(object);
+			fos=new FileOutputStream(file);
+			oos=new ObjectOutputStream(fos);
 			System.out.println(object.getAssemblyName()+" has added to the record");
+			oos.writeObject(object);
 		}
 		catch(NullPointerException nullpoint)
 		{
@@ -50,14 +61,33 @@ public class Record implements AssemblyWorks
         	object.setAssemblyContact(scanner.nextLong());
 			
 			data.add(object);
-			System.out.println(object.getAssemblyName()+" has added to the record");
+			try {
+				fos=new FileOutputStream(file);
+				oos=new ObjectOutputStream(fos);
+				System.out.println(object.getAssemblyName()+" has added to the record");
+				oos.writeObject(object);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public String toString()
 	{
-		Collections.sort(data);
+		try {
+			return FileUtils.readFileToString(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+		/*Collections.sort(data);
 		//System.out.println(data);
 		String hai="";
 		System.out.println("Listing all the assembly records");
@@ -65,7 +95,7 @@ public class Record implements AssemblyWorks
 		{
 			hai+=ptr+"\n";
 		}
-		return hai;
+		return hai;*/
 	}
 
 	@Override
