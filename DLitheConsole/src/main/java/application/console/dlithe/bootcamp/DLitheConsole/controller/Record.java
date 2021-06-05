@@ -69,13 +69,12 @@ public class Record implements AssemblyWorks
         	object.setAssemblyIssues(tmp);
         	System.out.println("Assembly contact: ");
         	object.setAssemblyContact(scanner.nextLong());
-			
-			//data.add(object);
 			try {
 				fos=new FileOutputStream(file);
 				oos=new ObjectOutputStream(fos);
+				data.add(object);
 				System.out.println(object.getAssemblyName()+" has added to the record");
-				oos.writeObject(object);
+				oos.writeObject(data);
 				fos.close();
 				oos.close();
 			} catch (IOException e) {
@@ -101,6 +100,7 @@ public class Record implements AssemblyWorks
 			ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
 			fis.close();
 			ois.close();
+			Collections.sort(hi);
 			for(Assembly tmp:hi)
 			{
 				hai+=tmp;
@@ -113,133 +113,159 @@ public class Record implements AssemblyWorks
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		/*
-		 * Collections.sort(data); //System.out.println(data); String hai="";
-		 * System.out.println("Listing all the assembly records"); for(Assembly
-		 * ptr:data) { hai+=ptr+"\n"; } return hai;
-		 */
 		return "";
 	}
 
 	@Override
 	public Assembly readOne(Integer number) {
-		System.out.println("Finding assembly matches "+number);
-		Assembly temp=null;
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
+		//String hai="";
 		Boolean state=false;
-		// TODO Auto-generated method stub
-		try
-		{
-			Iterator<Assembly> it=data.iterator();
-			while(it.hasNext())
+		Assembly yet=null;
+		try {
+			fis = new FileInputStream(file);
+			ois=new ObjectInputStream(fis);
+			ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
+			fis.close();
+			ois.close();
+			for(Assembly tmp:hi)
 			{
-				temp=it.next();
-				if(temp.getAssembyNumber()==number)
+				//hai+=tmp;
+				//System.out.println(tmp);
+				if(tmp.getAssembyNumber().equals(number))
 				{
 					state=true;
-					//return temp;
-					break;
+					yet=tmp;break;
 				}
 			}
 			if(state)
-			{
-				return temp;
-			}
+				return yet;
 			else
-			{
 				throw new AssemblyException();
-			}
-		}
-		catch(AssemblyException exp)
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (AssemblyException e) 
 		{
-			System.out.println(exp);
-			System.out.println(number+" is not in the list enter it once again:");
-			number=scanner.nextInt();
-			Iterator<Assembly> it=data.iterator();
-			while(it.hasNext())
+			// TODO Auto-generated catch block
+			try
 			{
-				temp=it.next();
-				if(temp.getAssembyNumber()==number)
+				e.printStackTrace();
+				System.out.println("Enter the valid number: ");
+				number=scanner.nextInt();
+				fis = new FileInputStream(file);
+				ois=new ObjectInputStream(fis);
+				ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
+				fis.close();
+				ois.close();
+				for(Assembly tmp:hi)
 				{
-					state=true;
-					//return temp;
-					break;
+					//hai+=tmp;
+					if(tmp.getAssembyNumber().equals(number))
+					{
+						state=true;
+						yet=tmp;break;
+					}
 				}
+				if(state)
+					return yet;
+				else
+					return null;
 			}
-			if(state)
-			{
-				return temp;
-			}
-			else
-			{
-				return null;
-			}
+			catch (IOException i) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException ie) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 		}
+		return null;
 	}
 	@Override
 	public Assembly readOne(String name) 
 	{
 		System.out.println("Finding assembly matches name "+name);
-		// TODO Auto-generated method stub
-		Assembly temp=null;
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
+		//String hai="";
 		Boolean state=false;
-		try
-		{
-			// TODO Auto-generated method stub
-			Iterator<Assembly> it=data.iterator();
-			while(it.hasNext())
+		Assembly yet=null;
+		try {
+			fis = new FileInputStream(file);
+			ois=new ObjectInputStream(fis);
+			ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
+			fis.close();
+			ois.close();
+			for(Assembly tmp:hi)
 			{
-				temp=it.next();
-				if(temp.getAssemblyName().equalsIgnoreCase(name))
+				//hai+=tmp;
+				//System.out.println(tmp);
+				if(tmp.getAssemblyName().equals(name))
 				{
-					state=true;break;
+					state=true;
+					yet=tmp;break;
 				}
 			}
 			if(state)
-				return temp;
+				return yet;
 			else
-			{
 				throw new AssemblyException();
-			}
-		}
-		catch(AssemblyException exp)
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch(AssemblyException exp)
 		{
 			System.out.println(exp);
 			System.out.println(name+" is not matching with the record enter it once again:");
 			name=scanner.next();
 			return readOne(name);
 		}
+		return null;
 	}
 	@Override
 	public String readOne(Integer population, String Issue, int count) {
 		// TODO Auto-generated method stub
-		try
-		{
-			System.out.println("Finding assemblies matches "+population+" population and issue: "+Issue);
-			Assembly temp=null;
-			Boolean dlithe=false;
-			String hai="";
-			// TODO Auto-generated method stub
-			Iterator<Assembly> it=data.iterator();
-			while(it.hasNext())
+		System.out.println("Finding assembly matches with population: "+population+" and issue: "+Issue);
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
+		//String hai="";
+		Boolean state=false;
+		Assembly yet=null;
+		try {
+			fis = new FileInputStream(file);
+			ois=new ObjectInputStream(fis);
+			ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
+			fis.close();
+			ois.close();
+			for(Assembly tmp:hi)
 			{
-				temp=it.next();
-				if(Arrays.toString(temp.getAssemblyIssues()).contains(Issue)&&temp.getAssemblyPopulation()>=population)
+				//hai+=tmp;
+				//System.out.println(tmp);
+				if((int)tmp.getAssemblyPopulation()>population&&Arrays.toString(tmp.getAssemblyIssues()).contains(Issue))
 				{
-					//return temp;
-					dlithe=true;
-					hai+=temp+"\n";
+					state=true;
+					yet=tmp;break;
 				}
 			}
-			if(dlithe)
-			{
-				return hai;
-			}
-			else {
+			if(state)
+				return yet.toString();
+			else
 				throw new AssemblyException();
-			}
-		}
-		catch(AssemblyException obj)
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch(AssemblyException obj)
 		{
 			System.out.println(obj+"\nEnter the Population and issue once again: ");
 			int pop=scanner.nextInt();
@@ -250,54 +276,116 @@ public class Record implements AssemblyWorks
 			else
 				return "Maximum chances used so can't continue the process";
 		}
+		return "Maximum chances used so can't continue the process";
 	}
 
 	@Override
 	public String delete(Integer number) 
 	{
 		System.out.println("Trying to delete assembly by number: "+number);
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
+		//String hai="";
 		Boolean state=false;
 		Assembly yet=null;
-		try
-		{
-			for(Assembly tmp:data)
+		try {
+			fis = new FileInputStream(file);
+			ois=new ObjectInputStream(fis);
+			ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
+			fis.close();
+			ois.close();
+			for(Assembly tmp:hi)
 			{
-				if(tmp.getAssembyNumber()==number)
+				//hai+=tmp;
+				//System.out.println(tmp);
+				if(tmp.getAssembyNumber().equals(number))
 				{
 					state=true;
 					yet=tmp;break;
 				}
 			}
-			if(state) {
+			if(state)
+			{
 				String name=yet.getAssemblyName();
-				data.remove(yet);
-				return name+" has deleted from the record";
+				hi.remove(yet);
+				FileOutputStream fos;
+				ObjectOutputStream oos;
+				try
+				{
+					fos=new FileOutputStream(file);
+					oos=new ObjectOutputStream(fos);
+					oos.writeObject(hi);
+					fos.close();
+					oos.close();
+					return name+" has deleted from the record";
+				}
+				catch(IOException ir)
+				{
+					ir.printStackTrace();
+				}
+				
 			}
-			else {
+			else
 				throw new AssemblyException();
-			}
-		}
-		catch(AssemblyException ex)
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch(AssemblyException ex)
 		{
 			System.out.println(ex+"\nEnter the correct number to delete: ");
 			number=scanner.nextInt();
-			for(Assembly tmp:data)
-			{
-				if(tmp.getAssembyNumber()==number)
+			try {
+				fis = new FileInputStream(file);
+				ois=new ObjectInputStream(fis);
+				ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
+				fis.close();
+				ois.close();
+				for(Assembly tmp:hi)
 				{
-					state=true;
-					yet=tmp;break;
+					//hai+=tmp;
+					//System.out.println(tmp);
+					if(tmp.getAssembyNumber().equals(number))
+					{
+						state=true;
+						yet=tmp;break;
+					}
 				}
-			}
-			if(state) {
-				String name=yet.getAssemblyName();
-				data.remove(yet);
-				return name+" has deleted from the record";
-			}
-			else {
-				return "Chances are over and Couldn't complete the deletion";
+				if(state)
+				{
+					String name=yet.getAssemblyName();
+					hi.remove(yet);
+					FileOutputStream fos;
+					ObjectOutputStream oos;
+					try
+					{
+						fos=new FileOutputStream(file);
+						oos=new ObjectOutputStream(fos);
+						oos.writeObject(hi);
+						fos.close();
+						oos.close();
+						return name+" has deleted from the record";
+					}
+					catch(IOException ir)
+					{
+						ir.printStackTrace();
+					}
+					
+				}
+				else {
+					return "Chances are over and Couldn't complete the deletion";
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+		return "Chances are over and Couldn't complete the deletion";
 	}
 
 	@Override
@@ -305,19 +393,29 @@ public class Record implements AssemblyWorks
 	{
 		Boolean state=false;
 		Assembly yet=null;
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
 		try
 		{
 			System.out.println("Trying to update assembly "+number);
-			for(Assembly ptr:data)
+			fis = new FileInputStream(file);
+			ois=new ObjectInputStream(fis);
+			ArrayList<Assembly> hi=(ArrayList<Assembly>) ois.readObject();
+			fis.close();
+			ois.close();
+			for(Assembly tmp:hi)
 			{
-				if(ptr.getAssembyNumber()==number)
+				//hai+=tmp;
+				//System.out.println(tmp);
+				if(tmp.getAssembyNumber().equals(number))
 				{
-					state=true;yet=ptr;
-					break;
+					state=true;
+					yet=tmp;break;
 				}
 			}
 			if(state)
 			{
+				int index=hi.indexOf(yet);
 				System.out.println("Tell us what you wish to update in the "+yet.getAssemblyName());
 				String aspect=scanner.next();// population
 				switch(aspect)
@@ -326,26 +424,49 @@ public class Record implements AssemblyWorks
 					System.out.println("Tell us new population value in the "+yet.getAssemblyName());
 					Integer newone=scanner.nextInt();
 					yet.setAssemblyPopulation(newone);
-					System.out.println(yet.getAssemblyName()+" has updated the "+aspect);
-					return;
+					//System.out.println(yet.getAssemblyName()+" has updated the "+aspect);
+					break;
 				case "contact":
 					System.out.println("Tell us new contact number for the "+yet.getAssemblyName());
 					Long mobile=scanner.nextLong();
 					yet.setAssemblyContact(mobile);
-					System.out.println(yet.getAssemblyName()+" has updated the "+aspect);
-					return;
+					//System.out.println(yet.getAssemblyName()+" has updated the "+aspect);
+					break;
 				}
+				hi.set(index, yet);
+				
+				FileOutputStream fos;
+				ObjectOutputStream oos;
+				try
+				{
+					fos=new FileOutputStream(file);
+					oos=new ObjectOutputStream(fos);
+					oos.writeObject(hi);
+					fos.close();
+					oos.close();
+					System.out.println(yet.getAssemblyName()+" has updated the "+aspect);
+				}
+				catch(IOException ir)
+				{
+					ir.printStackTrace();
+				}
+				
 			}
 			else {
 				throw new AssemblyException();
 			}
 		}
+		catch(IOException io)
+		{
+			io.printStackTrace();
+		}
+		catch(ClassNotFoundException cne) {cne.printStackTrace();}
 		catch(AssemblyException obj)
 		{
 			System.out.println(obj+"\nNumber is not valid");
 			int no=scanner.nextInt();
 			count++;
-			if(count<=3)
+			if(count<3)
 				update(no,count);
 			else
 				System.out.println("Chances are over and Couldn't complete the updation");

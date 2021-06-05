@@ -30,7 +30,7 @@ public class App
         //Assembly assembly5=null;
         //record.createNewRecord(assembly5);
         
-        System.out.println(record);
+        //System.out.println(record);
         
         //System.out.println(record.readOne(10));
         
@@ -38,13 +38,15 @@ public class App
         
         
         //System.out.println(record.delete(10));
+        //System.out.println(record);
         
         //System.out.println(record.readOne(1000000, "Drianage", 1));
         
         //record.update(100, 1);
+        //System.out.println(record);
         
         
-        /*System.out.println("Tell us user name: ");
+        System.out.println("Tell us user name: ");
         String user=scanner.next();
         System.out.println("Tell us password: ");
         String pass=scanner.next();
@@ -122,7 +124,6 @@ public class App
         else {
         	System.out.println("Invalid credentials");
         }
-        */
         
         scanner.close();
     }
