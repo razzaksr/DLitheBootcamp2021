@@ -34,17 +34,11 @@ public class Index extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Index frame = new Index();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { Index frame = new Index(); } catch
+	 * (Exception e) { e.printStackTrace(); } } }); }
+	 */
 
 	/**
 	 * Create the frame.
@@ -75,7 +69,6 @@ public class Index extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Index.class.getResource("/images/assembly.png")));
 		setTitle("Login");
 		setResizable(false);
-		setVisible(true);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 824, 494);
 		contentPane = new JPanel();
