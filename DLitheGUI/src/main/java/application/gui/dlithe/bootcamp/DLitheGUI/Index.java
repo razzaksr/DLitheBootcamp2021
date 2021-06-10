@@ -45,7 +45,7 @@ public class Index extends JFrame {
 	 */
 	public Index() {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			//Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306","root","");
 			String qry1="create database if not exists dlithe";
 			String qry2="create table if not exists dlithe.assembly(assembly_no int(4) primary key, assembly_name varchar(100) not null, assembly_member_name varchar(100) not null, assembly_population int(8) not null, assembly_contact bigint(13) not null, assembly_issues text)";
@@ -59,10 +59,10 @@ public class Index extends JFrame {
 			{
 				JOptionPane.showMessageDialog(Index.this, "Assembly table created now");
 			}
-		} catch (ClassNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} catch (SQLException e1) {
+		} /*
+			 * catch (ClassNotFoundException e2) { // TODO Auto-generated catch block
+			 * e2.printStackTrace(); }
+			 */catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
