@@ -48,7 +48,7 @@ public class EditAssembly extends JFrame {
 	 */
 	public EditAssembly(final Assembly object) 
 	{
-		setVisible(true);
+		//setVisible(true);
 		setResizable(false);
 		setTitle("Edit Assembly");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NewAssembly.class.getResource("/images/assembly.png")));

@@ -47,7 +47,7 @@ public class NewAssembly extends JFrame {
 	 * Create the frame.
 	 */
 	public NewAssembly() {
-		setVisible(true);
+		//setVisible(true);
 		setResizable(false);
 		setTitle("New Assembly");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NewAssembly.class.getResource("/images/assembly.png")));

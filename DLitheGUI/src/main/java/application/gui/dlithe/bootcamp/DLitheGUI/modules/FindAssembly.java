@@ -71,7 +71,7 @@ public class FindAssembly extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		setResizable(false);
+		//setResizable(false);
 		setTitle("Find Assemblies");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FindAssembly.class.getResource("/images/assembly.png")));
 		setVisible(true);
@@ -163,7 +163,7 @@ public class FindAssembly extends JFrame {
 							assembly.setAssemblyIssues(result.getString("assembly_issues"));
 						}
 						tmp.add(assembly);
-						new ViewAssembly(tmp);
+						new ViewAssembly(tmp).setVisible(true);
 						FindAssembly.this.dispose();
 					}
 					else if(no==0&&!popu.equals("")&&is.equals("")&&nm.equals(""))
@@ -185,7 +185,7 @@ public class FindAssembly extends JFrame {
 							assembly.setAssemblyIssues(result.getString("assembly_issues"));
 							tmp.add(assembly);
 						}
-						new ViewAssembly(tmp);
+						new ViewAssembly(tmp).setVisible(true);
 						FindAssembly.this.dispose();
 					}
 					else if(no==0&&popu.equals("")&&!is.equals("")&&nm.equals(""))
@@ -205,7 +205,7 @@ public class FindAssembly extends JFrame {
 							assembly.setAssemblyIssues(result.getString("assembly_issues"));
 							tmp.add(assembly);
 						}
-						new ViewAssembly(tmp);
+						new ViewAssembly(tmp).setVisible(true);
 						FindAssembly.this.dispose();
 					}
 					else if(no==0&&popu.equals("")&&is.equals("")&&!nm.equals(""))
@@ -226,7 +226,7 @@ public class FindAssembly extends JFrame {
 							assembly.setAssemblyIssues(result.getString("assembly_issues"));
 							tmp.add(assembly);
 						}
-						new ViewAssembly(tmp);
+						new ViewAssembly(tmp).setVisible(true);
 						FindAssembly.this.dispose();
 					}
 					else
