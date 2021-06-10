@@ -21,6 +21,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 
 public class Home extends JFrame {
@@ -47,6 +49,7 @@ public class Home extends JFrame {
 	 * Create the frame.
 	 */
 	public Home() {
+		setVisible(true);
 		setTitle("Home of Assembly Record");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Home.class.getResource("/images/assembly.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,6 +95,19 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				FindAssembly find=new FindAssembly();
+			}
+		});
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Exit");
+		mntmNewMenuItem_3.setForeground(new Color(0, 0, 128));
+		mnNewMenu.add(mntmNewMenuItem_3);
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JOptionPane.showMessageDialog(Home.this, "Thanks for using Our Application");
+				Home.this.dispose();
 			}
 		});
 		
