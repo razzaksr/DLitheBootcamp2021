@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import application.gui.dlithe.bootcamp.DLitheGUI.modules.NewAssembly;
 import application.gui.dlithe.bootcamp.DLitheGUI.modules.ViewAssembly;
+import application.gui.dlithe.bootcamp.DLitheGUI.modules.FindAssembly;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -81,6 +82,19 @@ public class Home extends JFrame {
 				ViewAssembly view=new ViewAssembly();
 			}
 		});
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Find");
+		mntmNewMenuItem_2.setForeground(new Color(0, 0, 128));
+		mnNewMenu.add(mntmNewMenuItem_2);
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				FindAssembly find=new FindAssembly();
+			}
+		});
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
