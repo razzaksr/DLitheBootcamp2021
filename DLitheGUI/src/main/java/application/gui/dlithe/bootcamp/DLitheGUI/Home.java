@@ -71,6 +71,7 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				NewAssembly newassem=new NewAssembly();
+				newassem.setVisible(true);
 			}
 		});
 		
@@ -83,6 +84,7 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				ViewAssembly view=new ViewAssembly();
+				view.setVisible(true);
 			}
 		});
 		
@@ -95,6 +97,7 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				FindAssembly find=new FindAssembly();
+				find.setVisible(true);
 			}
 		});
 		
