@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Login Page</title>
+<title>SignUp Page</title>
 <!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <!-- JS, Popper.js, and jQuery -->
@@ -14,28 +14,27 @@
 </head>
 <body>
 <div class="container">
-	<h1 class="text-primary text-center">Login to Dlithe Store</h1>
+	<h1 class="display-4 text-center text-info">Signup New User</h1>
 	<div class="row justify-content-center">
-		<div class="col-md-6 col-sm-12 shadow-lg rounded my-4 p-4">
-			<form action="" method="post">
-				<div class="form-group">
-					<label for="user">User name</label>
-					<input type="text" class="form-control" placeholder="Tell us user name" name="user">
-				</div>
-				<div class="form-group">
-					<label for="pass">Pass word</label>
-					<input type="password" class="form-control" placeholder="Tell us password" name="pass">
-				</div>
-				<div class="row justify-content-around my-4">
-					<button class="btn btn-outline-primary">Login</button>
-					<button class="btn btn-outline-danger">Cancel</button>
-				</div>
-				<a href="forgetpass.jsp" class="float-right">Forget Password</a>
-				<a href="signup.jsp" class="btn btn-outline-success float-left">SignUP</a>
-			</form>
-		</div>
+		<form action="NewUser" method="post" class="shadow col-md-6 col-sm-12 rounded p-5">
+			<div class="form-group">
+				<label for="user">User Name</label>
+				<input type="text" name="user" placeholder="User name" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="pass">Select Password</label>
+				<input type="password" name="pass" placeholder="Password" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="contact">User Contact</label>
+				<input type="number" name="contact" placeholder="User contact" class="form-control">
+			</div>
+			<div class="row justify-content-around">
+				<button class="btn btn-outline-success">Signup</button>
+				<button class="btn btn-outline-dark">Clear</button>
+			</div>
+		</form>
 	</div>
-	<%out.print(request.getAttribute("info")); %>
 </div>
 </body>
 </html>
