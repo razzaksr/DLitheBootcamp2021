@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -12,18 +13,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class UpdatePassword
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/UpdatePassword")
-public class UpdatePassword extends HttpServlet {
+@WebServlet("/log")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatePassword() {
+    public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,39 +45,32 @@ public class UpdatePassword extends HttpServlet {
 		// TODO Auto-generated method stub
 		String us=request.getParameter("user");
 		String ps=request.getParameter("pass");
-		String conps=request.getParameter("conpass");
-		if(ps.equals(conps))
-		{
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/dlithe","root","");
-				String qry="update users set user_pass=? where user_name=?";
-				PreparedStatement pre=con.prepareStatement(qry);
-				pre.setString(1, ps);pre.setString(2, us);
-				int ack=pre.executeUpdate();
-				RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
-				if(ack!=0)
-				{
-					request.setAttribute("info", us+" password reset done");
-				}
-				else
-				{
-					request.setAttribute("info", us+" password reset failed");
-				}
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/dlithe","root","");
+			String qry="select * from users where user_name=? and user_pass=?";
+			PreparedStatement pre=con.prepareStatement(qry);
+			pre.setString(1, us);pre.setString(2, ps);
+			ResultSet set=pre.executeQuery();
+			if(set.next())
+			{
+				HttpSession ses=request.getSession();
+				RequestDispatcher dis=request.getRequestDispatcher("home.jsp");
+				ses.setAttribute("logged", us);
 				dis.forward(request, response);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
-		else
-		{
-			RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
-			request.setAttribute("info", us+" password reset failed due to mismatch credentials");
-			dis.forward(request, response);
+			else
+			{
+				RequestDispatcher dis=request.getRequestDispatcher("index.jsp");
+				request.setAttribute("info", "user name password mismatch");
+				dis.forward(request, response);
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

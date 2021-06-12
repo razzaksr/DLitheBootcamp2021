@@ -17,7 +17,7 @@
 	<h1 class="text-primary text-center">Login to Dlithe Store</h1>
 	<div class="row justify-content-center">
 		<div class="col-md-6 col-sm-12 shadow-lg rounded my-4 p-4">
-			<form action="" method="post">
+			<form action="log" method="post">
 				<div class="form-group">
 					<label for="user">User name</label>
 					<input type="text" class="form-control" placeholder="Tell us user name" name="user">
