@@ -1,3 +1,5 @@
+<%@page import="java.util.Arrays"%>
+<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -13,8 +15,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container">
+<div class="container padding">
 	<h1 class="text-primary text-center">Login to Dlithe Store</h1>
+	<!-- <img src="images/image.jpg"/> -->
+	<%File file=new File(System.getProperty("user.dir"));%>
 	<div class="row justify-content-center">
 		<div class="col-md-6 col-sm-12 shadow-lg rounded my-4 p-4">
 			<form action="log" method="post">
