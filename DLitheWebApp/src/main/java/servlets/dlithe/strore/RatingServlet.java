@@ -1,6 +1,13 @@
 package servlets.dlithe.strore;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,8 +37,49 @@ public class RatingServlet extends HttpServlet {
 		String param1=request.getParameter("id");
 		String param2=request.getParameter("rate");
 		int aid=Integer.parseInt(param1);
-		int arate=Integer.parseInt(param2);
-		System.out.println(arate+" is received for "+aid );
+		double arate=Double.parseDouble(param2);
+		//System.out.println(arate+" is received for "+aid );
+		RequestDispatcher dispatch=request.getRequestDispatcher("home.jsp");
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/dlithe","root","");
+			String qry="update store set app_sum=app_sum+? where app_id=?";
+			PreparedStatement pre=con.prepareStatement(qry);
+			pre.setDouble(1, arate);pre.setInt(2, aid);
+			int ack=pre.executeUpdate();
+			if(ack!=0)
+			{
+				qry="select * from store where app_id=?";
+				pre=con.prepareStatement(qry);pre.setInt(1,aid);
+				ResultSet set=pre.executeQuery();
+				if(set.next())
+				{
+					int count=set.getInt("app_downloads");
+					double sum=set.getDouble("app_sum");
+					double avg=sum/count;
+					qry="update store set app_rating=? where app_id=?";
+					pre=con.prepareStatement(qry);pre.setDouble(1, avg);pre.setInt(2, aid);
+					int ak=pre.executeUpdate();
+					if(ak!=0)
+					{
+						request.setAttribute("msg", aid+" App rated successfully");
+					}
+					else
+					{
+						request.setAttribute("msg", aid+" App rating failed");
+					}
+				}
+				else {request.setAttribute("msg", aid+" App rating failed");}
+			}
+			else{request.setAttribute("msg", aid+" App rating failed");}
+			dispatch.forward(request, response);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

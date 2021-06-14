@@ -40,14 +40,14 @@ function ask(id)
 <%
 String who=(String)session.getAttribute("logged");
 if(who!=null){
-out.println("<h1 class='text-primary text-center bg-warning'>"+who+"</h1>"); 
+out.println("<h1 class='text-primary bg-warning'>Welcome back....... "+who+"</h1>"); 
 String m=(String)request.getAttribute("msg");
 if(m!=null){
 	out.println("<p class='text-danger'>"+m+"<p>");
 }%>
 
 <a href="uploadapp.jsp" class="btn btn-outline-dark">Upload New Apps</a>
-<img/>
+<a href="deleteapp.jsp" class="btn btn-outline-danger">Delete your apps</a>
 <%
 try
 {
@@ -74,18 +74,18 @@ try
 		fos.write(tm);
 		//System.out.println("images downloaded");
 		fos.close();
+		String ids=""+set.getInt("app_id");
 	%>
 		
 			<div class="card col-md-3 col-sm-6 p-3">
 				<img src="images/game<%=num %>.jpg" class="card-img w-100" alt="source is wrong"/>
 				<div class="card-body">
-					<p class="text-success display-4 card-title"><%=set.getString("app_name") %></p>
-					<p class="text-success card-text">Developed by <%=set.getString("app_by") %></p>
-					<p class="text-success card-text float-left">Downloads <%=set.getInt("app_downloads") %></p>
+					<p class="text-primary display-4 card-title"><%=set.getString("app_name") %></p>
+					<p class="text-info card-text">Developed by <%=set.getString("app_by") %></p>
+					<p class="text-warning card-text float-left">Downloads <%=set.getInt("app_downloads") %></p>
 					<%-- <a href="rating?id=<%=set.getInt("app_id")%>"><p class="text-success card-text float-right">Rating <%=set.getDouble("app_rating") %></p></a> --%>
-					<p class="text-success card-text float-right" onclick=ask()">Rating <%=set.getDouble("app_rating") %></p>
-					<br/>
-					<a href="download?id=<%=set.getInt("app_id")%>" class="btn btn-outline-success float-right">Download </a>
+					<p class="text-dark card-text float-right ml-3" onclick="ask('<%=ids%>')">Rating <%=set.getDouble("app_rating") %></p>
+					<a href="download?id=<%=set.getInt("app_id")%>" class="btn btn-outline-success float-right">Download</a>
 				</div>
 			</div>
 	<%num++;}%>
@@ -111,19 +111,94 @@ while(set.next())
 	//System.out.println(Arrays.toString(tm)+" is going to write on "+file.getAbsolutePath());
 	fos.write(tm);
 	//System.out.println("images downloaded");
-	fos.close();
-%>
-	
-		<div class="card col-md-3 col-sm-6 p-3">
-			<img src="images/bank<%=num %>.jpg" class="card-img w-100" alt="source is wrong"/>
-			<div class="card-body">
-				<p class="text-success display-4 card-title"><%=set.getString("app_name") %></p>
-				<p class="text-success card-text">Developed by <%=set.getString("app_by") %></p>
-				<p class="text-success card-text float-left">Downloads <%=set.getInt("app_downloads") %></p>
-				<p class="text-success card-text float-right">Rating <%=set.getDouble("app_rating") %></p>
-				<a href="download" class="btn btn-outline-success">Download </a>
+	String ids=""+set.getInt("app_id");
+	%>
+		
+			<div class="card col-md-3 col-sm-6 p-3">
+				<img src="images/bank<%=num %>.jpg" class="card-img w-100" alt="source is wrong"/>
+				<div class="card-body">
+					<p class="text-primary display-4 card-title"><%=set.getString("app_name") %></p>
+					<p class="text-info card-text">Developed by <%=set.getString("app_by") %></p>
+					<p class="text-warning card-text float-left">Downloads <%=set.getInt("app_downloads") %></p>
+					<%-- <a href="rating?id=<%=set.getInt("app_id")%>"><p class="text-success card-text float-right">Rating <%=set.getDouble("app_rating") %></p></a> --%>
+					<p class="text-dark card-text float-right ml-3" onclick="ask('<%=ids%>')">Rating <%=set.getDouble("app_rating") %></p>
+					<a href="download?id=<%=set.getInt("app_id")%>" class="btn btn-outline-success float-right">Download</a>
+				</div>
 			</div>
-		</div>
+<%num++;}%>
+</div>
+<%
+qry="select * from store where app_category='Social'";
+pre=con.prepareStatement(qry);
+set=pre.executeQuery();
+%>
+<p class="display-4 text-primary">Social Media</p>
+	<div class="row padding">
+<%
+num=1;
+while(set.next())
+{
+	//System.out.println(set.getString("app_name"));
+	InputStream is=(InputStream)set.getBinaryStream("app_image");
+	//System.out.println("Image readed from table "+is.available());
+	File file=new File("C:\\Users\\ADMIN\\git\\DLitheBoot2021\\DLitheWebApp\\src\\main\\webapp\\images\\social"+num+".jpg");
+	FileOutputStream fos=new FileOutputStream(file);
+	byte[] tm=new byte[is.available()];
+	is.read(tm);
+	//System.out.println(Arrays.toString(tm)+" is going to write on "+file.getAbsolutePath());
+	fos.write(tm);
+	//System.out.println("images downloaded");
+	String ids=""+set.getInt("app_id");
+	%>
+		
+			<div class="card col-md-3 col-sm-6 p-3">
+				<img src="images/social<%=num %>.jpg" class="card-img w-100" alt="source is wrong"/>
+				<div class="card-body">
+					<p class="text-primary display-4 card-title"><%=set.getString("app_name") %></p>
+					<p class="text-info card-text">Developed by <%=set.getString("app_by") %></p>
+					<p class="text-warning card-text float-left">Downloads <%=set.getInt("app_downloads") %></p>
+					<%-- <a href="rating?id=<%=set.getInt("app_id")%>"><p class="text-success card-text float-right">Rating <%=set.getDouble("app_rating") %></p></a> --%>
+					<p class="text-dark card-text float-right ml-3" onclick="ask('<%=ids%>')">Rating <%=set.getDouble("app_rating") %></p>
+					<a href="download?id=<%=set.getInt("app_id")%>" class="btn btn-outline-success float-right">Download</a>
+				</div>
+			</div>
+<%num++;}%>
+</div>
+<%
+qry="select * from store where app_category='Education'";
+pre=con.prepareStatement(qry);
+set=pre.executeQuery();
+%>
+<p class="display-4 text-primary">Education</p>
+	<div class="row padding">
+<%
+num=1;
+while(set.next())
+{
+	//System.out.println(set.getString("app_name"));
+	InputStream is=(InputStream)set.getBinaryStream("app_image");
+	//System.out.println("Image readed from table "+is.available());
+	File file=new File("C:\\Users\\ADMIN\\git\\DLitheBoot2021\\DLitheWebApp\\src\\main\\webapp\\images\\edu"+num+".jpg");
+	FileOutputStream fos=new FileOutputStream(file);
+	byte[] tm=new byte[is.available()];
+	is.read(tm);
+	//System.out.println(Arrays.toString(tm)+" is going to write on "+file.getAbsolutePath());
+	fos.write(tm);
+	//System.out.println("images downloaded");
+	String ids=""+set.getInt("app_id");
+	%>
+		
+			<div class="card col-md-3 col-sm-6 p-3">
+				<img src="images/edu<%=num %>.jpg" class="card-img w-100" alt="source is wrong"/>
+				<div class="card-body">
+					<p class="text-primary display-4 card-title"><%=set.getString("app_name") %></p>
+					<p class="text-info card-text">Developed by <%=set.getString("app_by") %></p>
+					<p class="text-warning card-text float-left">Downloads <%=set.getInt("app_downloads") %></p>
+					<%-- <a href="rating?id=<%=set.getInt("app_id")%>"><p class="text-success card-text float-right">Rating <%=set.getDouble("app_rating") %></p></a> --%>
+					<p class="text-dark card-text float-right ml-3" onclick="ask('<%=ids%>')">Rating <%=set.getDouble("app_rating") %></p>
+					<a href="download?id=<%=set.getInt("app_id")%>" class="btn btn-outline-success float-right">Download</a>
+				</div>
+			</div>
 <%num++;}%>
 </div>
 <% }
