@@ -1,10 +1,12 @@
+<%@page import="servlets.dlithe.strore.Store"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Deleting Apps</title>
+<title>Apps in BIN</title>
 <!-- CSS only -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <!-- JS, Popper.js, and jQuery -->
@@ -13,14 +15,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-<%if(session.getAttribute("logged")!=null){ %>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <a href="home.jsp" class="btn btn-outline-success badge-pill">Home</a>
 <a href="out" class="btn btn-outline-secondary badge-pill">Logout</a>
 <p class="text-danger text-center">${requestScope.msg}</p>
-<sql:setDataSource var="db" driver="com.mysql.jdbc.Driver" user="root" password="" url="jdbc:mysql://localhost:3306/dlithe"/>
-<sql:query dataSource="${db}" var="qry" sql="select * from store where app_by = '${sessionScope.logged}'"/>
+<%ArrayList<Store> bin =(ArrayList<Store>) session.getAttribute("bin"); %>
 <div class="container-fluid">
 	<div class="row justify-content-center">
 		<table class="table table-responsive border rounded shadow p-3">
@@ -31,20 +30,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				<core:forEach var="each" items="${qry.rows }">
+				<core:forEach var="each" items="${bin }">
 					<tr>
-						<td>${each.app_name }</td><td>${each.app_id }</td><td>${each.app_type }</td>
-						<td>${each.app_category }</td><td>${each.app_downloads }</td><td>${each.app_rating }</td>
-						<td><a href="del?id=${each.app_id }">Delete</a></td>
+						<td>${each.getApp_name() }</td><td>${each.getApp_id() }</td><td>${each.getApp_type() }</td>
+						<td>${each.getApp_category() }</td><td>${each.getApp_downloads() }</td>
+						<td>${each.getApp_rating() }</td>
+						<td><a href="restore?id=${each.getApp_id() }">Restore</a></td>
 					</tr>
 				</core:forEach>
 			</tbody>
 		</table>
 	</div>
 </div>
-<%} 
-else{
-	response.sendRedirect("index.jsp");
-}%>
 </body>
 </html>

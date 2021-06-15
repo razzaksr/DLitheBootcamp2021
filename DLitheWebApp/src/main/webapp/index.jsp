@@ -39,7 +39,6 @@
 			</form>
 		</div>
 	</div>
-	<%out.print(request.getAttribute("info")); %>
 	${requestScope.info }
 </div>
 </body>

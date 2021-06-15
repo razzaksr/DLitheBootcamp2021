@@ -38,6 +38,9 @@ function ask(id)
 <body>
 <div class="container-fluid padding">
 <%
+response.addHeader("Cache-Control","no-cache, no-store, must-revalidate");
+response.addHeader("Pragma", "no-cache");
+response.addHeader("Exipiry","0");
 String who=(String)session.getAttribute("logged");
 if(who!=null){
 out.println("<h1 class='text-primary bg-warning'>Welcome back....... "+who+"</h1>"); 
@@ -48,6 +51,8 @@ if(m!=null){
 
 <a href="uploadapp.jsp" class="btn btn-outline-dark">Upload New Apps</a>
 <a href="deleteapp.jsp" class="btn btn-outline-danger">Delete your apps</a>
+<a href="bin.jsp" class="btn btn-outline-warning">BIN</a>
+<a href="out" class="btn btn-outline-secondary badge-pill">Logout</a>
 <%
 try
 {
@@ -205,7 +210,11 @@ while(set.next())
 catch(Exception e){}
 %>
 
-<%}%>
+<%}
+else
+{
+	response.sendRedirect("index.jsp");
+}%>
 </div>
 </body>
 </html>

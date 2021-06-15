@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -54,7 +55,9 @@ public class LoginServlet extends HttpServlet {
 			ResultSet set=pre.executeQuery();
 			if(set.next())
 			{
+				ArrayList<Store> model=new ArrayList<Store>();
 				HttpSession ses=request.getSession();
+				ses.setAttribute("bin", model);
 				RequestDispatcher dis=request.getRequestDispatcher("home.jsp");
 				ses.setAttribute("logged", us);
 				dis.forward(request, response);

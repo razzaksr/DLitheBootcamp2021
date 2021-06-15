@@ -13,6 +13,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
+<a href="home.jsp" class="btn btn-outline-success badge-pill">Home</a>
+<a href="out" class="btn btn-outline-secondary badge-pill">Logout</a>
 <%String user=(String)session.getAttribute("logged"); 
 String m=(String)request.getAttribute("msg");
 if(m!=null){
