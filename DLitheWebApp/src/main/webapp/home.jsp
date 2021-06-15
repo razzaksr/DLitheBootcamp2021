@@ -45,15 +45,38 @@ String who=(String)session.getAttribute("logged");
 if(who!=null){
 out.println("<h1 class='text-primary bg-warning'>Welcome back....... "+who+"</h1>"); 
 String m=(String)request.getAttribute("msg");
+%>
+<nav class="navbar navbar-expand-lg navbar-light">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="https://dlithe.com">
+			<img src="images/dlithe.png"/>
+		</a>
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#dlithe">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	
+	<div class="collapse navbar-collapse" id="dlithe">
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active mr-3">
+				<a href="uploadapp.jsp" class="btn btn-outline-dark badge-pill w-100">Upload</a>
+			</li>
+			<li class="nav-item mr-3">
+				<a href="deleteapp.jsp" class="btn btn-outline-dark badge-pill w-100">Delete</a>
+			</li>
+			<li class="nav-item mr-3">
+				<a href="bin.jsp" class="btn btn-outline-dark badge-pill w-100">BIN</a>
+			</li>
+			<li class="nav-item mr-3">
+				<a href="out" class="btn btn-outline-dark badge-pill w-100">Logout</a>
+			</li>
+		</ul>
+	</div>
+	</div>
+</nav>
+<%
 if(m!=null){
 	out.println("<p class='text-danger'>"+m+"<p>");
-}%>
-
-<a href="uploadapp.jsp" class="btn btn-outline-dark">Upload New Apps</a>
-<a href="deleteapp.jsp" class="btn btn-outline-danger">Delete your apps</a>
-<a href="bin.jsp" class="btn btn-outline-warning">BIN</a>
-<a href="out" class="btn btn-outline-secondary badge-pill">Logout</a>
-<%
+}
 try
 {
 	Class.forName("com.mysql.cj.jdbc.Driver");

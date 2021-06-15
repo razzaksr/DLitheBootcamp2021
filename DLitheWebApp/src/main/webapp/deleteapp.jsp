@@ -13,11 +13,31 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-<%if(session.getAttribute("logged")!=null){ %>
+<%
+response.addHeader("Cache-Control","no-cache, no-store, must-revalidate");
+response.addHeader("Pragma", "no-cache");
+response.addHeader("Exipiry","0");
+if(session.getAttribute("logged")!=null){ %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<a href="home.jsp" class="btn btn-outline-success badge-pill">Home</a>
-<a href="out" class="btn btn-outline-secondary badge-pill">Logout</a>
+<nav class="navbar navbar-expand-lg navbar-light">
+	<a class="navbar-brand" href="https://dlithe.com">
+		<img src="images/dlithe.png"/>
+	</a>
+	<button class="navbar-toggler" data-ride="collapse" data-target="#dlithe">
+		<span class="navbar-togglet-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="dlithe">
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active mr-3">
+				<a href="home.jsp" class="btn btn-outline-success badge-pill">Home</a>
+			</li>
+			<li class="nav-item mr-3">
+				<a href="out" class="btn btn-outline-dark badge-pill">Logout</a>
+			</li>
+		</ul>
+	</div>
+</nav>
 <p class="text-danger text-center">${requestScope.msg}</p>
 <sql:setDataSource var="db" driver="com.mysql.jdbc.Driver" user="root" password="" url="jdbc:mysql://localhost:3306/dlithe"/>
 <sql:query dataSource="${db}" var="qry" sql="select * from store where app_by = '${sessionScope.logged}'"/>
