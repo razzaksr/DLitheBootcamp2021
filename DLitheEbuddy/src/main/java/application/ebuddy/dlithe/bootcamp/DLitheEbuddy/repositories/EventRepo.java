@@ -11,8 +11,19 @@ import application.ebuddy.dlithe.bootcamp.DLitheEbuddy.model.Event;
 @Repository
 public interface EventRepo extends JpaRepository<Event, Integer>
 {
-	/*
-	 * @Query("from Event where eventEnded >= new Date()") public List<Event>
-	 * findAllByAvailable();
-	 */
+	
+	 @Query("from Event where eventEnded >= current_date")
+	 // select * from event where event_ended >= currentdate()
+	 public List<Event> findAllByAvailable();
+	 
+	 @Query("from Event where eventEnded < current_date")
+	 public List<Event> findAllByPast();
+	 
+	 public List<Event> findAllByEventExpert(String expert);
+	 
+	 
+		/*
+		 * @Query("update Event set eventStatus='past' where eventEnded < current_date")
+		 * public void updateByEnded();
+		 */
 }

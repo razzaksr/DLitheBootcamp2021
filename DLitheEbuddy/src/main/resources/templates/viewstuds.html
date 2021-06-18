@@ -2,8 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<title>DLithe E Buddy</title>
-<!-- CSS only -->
+<title>Viewing Students</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -11,11 +10,26 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container">
-	<a th:href="@{/neweve}" class="btn btn-outline-primary">New Event</a>
-	<a th:href="@{/add}" class="btn btn-outline-primary">Add Students to the Event</a>
-	<a th:href="@{/list}" class="btn btn-outline-primary">List All Event</a>
-	<a th:href="@{/shortlist}" class="btn btn-outline-primary">Filter</a>
-</div>
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<table class="col-md-6 col-lg-8 col-sm-12 table table-stripped table-responsive border rounded shadow-lg">
+				<thead class="thead-primary">
+					<tr>
+						<th>Student ID</th><th>Student Name</th><th>Event</th><th>Student Organization</th>
+						<th>Student Contact number</th><th>Student Email</th>
+						<th>Student Certification</th>
+					</tr>
+				</thead>
+				<tbody class="bg-dark text-light text-center">
+					<tr th:each="tmp:${people}">
+						<td th:text="${tmp.getStudentId()}"></td><td th:text="${tmp.getStudentName()}"></td>
+						<td th:text="${tmp.getEvent().getEventName()}"></td><td th:text="${tmp.getStudentOrg()}"></td>
+						<td th:text="${tmp.getStudentContact()}"></td><td th:text="${tmp.getStudentEmail()}"></td>
+						<td th:text="${tmp.getStudentCeriticate()}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

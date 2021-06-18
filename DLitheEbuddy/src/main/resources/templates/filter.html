@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Filtering Events</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="conatiner">
+		<h1 class="display-4">Filtering Events</h1>
+		<div class="row justify-content-center">
+			<form class="col-md-8 col-sm-12 rounded shadow-lg border p-lg-5" th:action="@{/filter}" method="post">
+				<div class="form-group">
+					<label>Filter By Status</label>
+					<div class="form-inline">
+						<input type="radio" name="status" value="past">Past
+						<input type="radio" name="status" value="live">Live
+					</div>
+				</div>
+				<hr class="my-4">
+				<p class="text-center">OR</p>
+				<div class="form-group">
+					<label>Expert based</label>
+					<select class="form-control" name="expert">
+						<option>Select Any Expert</option>
+						<option th:each="one:${eves}" th:text="${one.eventExpert}"></option>
+					</select>
+				</div>
+				<hr class="my-4"><p class="text-center">OR</p>
+				<div class="form-group">
+					<label>Technology based</label>
+					<input type="text" name="tech" placeholder="Technology based filter" class="form-control" value="">
+				</div>
+				<div class="row justify-content-around">
+					<button class="btn btn-outline-dark">Filter</button>
+					<button class="btn btn-outline-secondary">Clear</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
