@@ -21,6 +21,9 @@ public interface EventRepo extends JpaRepository<Event, Integer>
 	 
 	 public List<Event> findAllByEventExpert(String expert);
 	 
+	 @Query("from Event where eventName like %:name%")
+	 public List<Event> findAllByEventName(String name);
+	 
 	 
 		/*
 		 * @Query("update Event set eventStatus='past' where eventEnded < current_date")

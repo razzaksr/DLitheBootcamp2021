@@ -11,6 +11,7 @@
 </head>
 <body>
 	<div class="container-fluid">
+		<p class="text-center text-success" th:text="${msg}"></p>
 		<div class="row justify-content-center">
 			<table class="col-md-6 col-lg-8 col-sm-12 table table-stripped table-responsive border rounded shadow-lg">
 				<thead class="thead-primary">
@@ -21,14 +22,24 @@
 				</thead>
 				<tbody class="bg-dark text-light text-center">
 					<tr th:each="tmp:${bulk}">
-						<td th:text="${tmp.getEventId()}"></td><td th:text="${tmp.getEventName()}"></td>
+						<td>
+							<a th:href="@{'/edit/'+${tmp.getEventId()}}">
+								<p th:text="${tmp.getEventId()}"></p>
+							</a>
+						</td>
+						<td th:text="${tmp.getEventName()}"></td>
 						<td th:text="${tmp.getEventExpert()}"></td>
 						<td>
 							<a th:href="@{'/students/'+${tmp.getEventId()}}">
 								<p th:text="${tmp.getEventParticipants()}"></p>
 							</a>
 						</td>
-						<td th:text="${tmp.getEventVenue()}"></td><td th:text="${tmp.getEventStarted()}"></td>
+						<td>
+							<a th:href="@{'/erase/'+${tmp.getEventId()}}">
+								<p th:text="${tmp.getEventVenue()}"></p>
+							</a>
+						</td>
+						<td th:text="${tmp.getEventStarted()}"></td>
 						<td th:text="${tmp.getEventEnded()}"></td><td th:text="${tmp.getEventStatus()}"></td>
 					</tr>
 				</tbody>

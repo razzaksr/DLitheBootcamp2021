@@ -15,6 +15,22 @@ public class StudentsService
 	@Autowired
 	StudentsRepo srepo;
 	
+	public String remove(Integer id)
+	{
+		String  info=getViaId(id).getStudentName();
+		srepo.deleteById(id);
+		return info+" has deleted";
+	}
+	
+	public String multipleDelete(Integer id)
+	{
+		List<Students> tmp = getByEventId(id);
+		
+		srepo.deleteAll(tmp);
+		
+		return "done";
+	}
+	
 	public Students addStudent(Students object)
 	{
 		return srepo.save(object);
@@ -28,5 +44,10 @@ public class StudentsService
 	public List<Students> getByEventId(Integer id)
 	{
 		return srepo.findAllByEventEventId(id);
+	}
+	
+	public Students getViaId(Integer id)
+	{
+		return srepo.findById(id).orElse(new Students());
 	}
 }

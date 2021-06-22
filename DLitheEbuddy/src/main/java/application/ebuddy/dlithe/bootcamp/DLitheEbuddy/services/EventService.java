@@ -21,6 +21,19 @@ public class EventService
 		return erepo.save(object);
 	}
 	
+	public String remove(Integer id)
+	{
+		String info=getByIdentity(id).getEventName();
+		erepo.deleteById(id);
+		System.out.println("Deleted in service");
+		return info;
+	}
+	
+	public Event getByIdentity(Integer id)
+	{
+		return erepo.findById(id).orElse(new Event());
+	}
+	
 	public List<Event> every()
 	{
 		return erepo.findAll();
@@ -34,6 +47,11 @@ public class EventService
 	public List<Event> getEventsByExpert(String expert)
 	{
 		return erepo.findAllByEventExpert(expert);
+	}
+	
+	public List<Event> getEventsByNameMatch(String name)
+	{
+		return erepo.findAllByEventName(name);
 	}
 	
 	public void alterStatus()

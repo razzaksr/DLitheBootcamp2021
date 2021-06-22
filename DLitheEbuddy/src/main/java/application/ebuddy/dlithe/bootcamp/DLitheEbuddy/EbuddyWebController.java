@@ -1,5 +1,7 @@
 package application.ebuddy.dlithe.bootcamp.DLitheEbuddy;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +74,34 @@ public class EbuddyWebController
 		return "peopleadd";
 	}
 	
+	
+	@RequestMapping("/del/{id}")
+	public String removePeople(Model model,@PathVariable("id") Integer id) 
+	{
+		Event eve = serv.getViaId(id).getEvent();
+		eve.setEventParticipants(eve.getEventParticipants()-1);
+		
+		String info=serv.remove(id);
+		model.addAttribute("msg", info);
+		return update(model, eve);
+	}
+	
+	@RequestMapping("/editstudent/{id}")
+	public String editPeople(Model model,@PathVariable("id") Integer id)
+	{
+		Students stu = serv.getViaId(id);
+		model.addAttribute("student", stu);
+		return "editstudent";
+	}
+	
+	@RequestMapping(value="/stuedit",method=RequestMethod.POST)
+	public String editingPeople(Model model,@ModelAttribute("student") Students student)
+	{
+		serv.addStudent(student);
+		model.addAttribute("info", student.getStudentName()+" updated");
+		return listing(model);
+	}
+	
 	@RequestMapping("/list")
 	public String listing(Model model)
 	{
@@ -105,11 +135,11 @@ public class EbuddyWebController
 	}
 	
 	@RequestMapping(value="/filter",method = RequestMethod.POST)
-	public String finding(Model model, @RequestParam("status") String status, @RequestParam("expert") String expert, @RequestParam("tech") String tech)
+	public String finding(Model model, @RequestParam(required = false,value="status") String status,@RequestParam(required = false,value="expert") String expert,@RequestParam(required = false,value="tech") String tech)
 	{
-		System.out.println(status+" "+expert+" "+tech);
+		//System.out.println(status+" "+expert+" "+tech);
 		List<Event> object=null;
-		if(!status.equals("")&&expert.equals("Select Any Expert")&&tech=="")
+		if(status!=null&&expert.equals("Select Any Expert")&&tech=="")
 		{
 			if(status.equalsIgnoreCase("live"))
 			{
@@ -124,11 +154,66 @@ public class EbuddyWebController
 				//System.out.println("Past events "+object);
 			}
 		}
-		else if(!status.equals("")&&expert.equals("Select Any Expert")&&tech=="")
+		else if(status==null&&!expert.equals("Select Any Expert")&&tech=="")
 		{
-			
+			object=eserv.getEventsByExpert(expert);
+		}
+		else if(status==null&&expert.equals("Select Any Expert")&&tech!="")
+		{
+			object=eserv.getEventsByNameMatch(tech);
 		}
 		model.addAttribute("bulk", object);
 		return "viewevents";
 	}
+	
+	@RequestMapping("/offer/{id}")
+	public String updateCertificate(Model model,@PathVariable("id") Integer id)
+	{
+		Students obj=serv.getViaId(id);
+		
+		if(obj.getStudentCeriticate()==false&&!(eserv.getEventsByAvailable().contains(obj.getEvent())))
+		{
+			obj.setStudentCeriticate(true);
+			serv.addStudent(obj);
+		}
+		model.addAttribute("bulk",eserv.every());
+		return "viewevents";
+	}
+	
+	@RequestMapping("/edit/{id}")
+	public String letEdit(Model model,@PathVariable("id") Integer id)
+	{
+		Event eve=eserv.getByIdentity(id);
+		model.addAttribute("object", eve);
+		return "edit";
+	}
+	
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public String update(Model model, @ModelAttribute("object") Event object)
+	{
+		Date date1=object.getEventStarted();
+		Date date2=object.getEventEnded();
+		
+		SimpleDateFormat formatter=new SimpleDateFormat("MM/dd/yyyy");
+		object.setEventStarted(new Date(formatter.format(date1)));
+		object.setEventEnded(new Date(formatter.format(date2)));
+		
+		String name = eserv.addEvent(object).getEventName();
+		model.addAttribute("msg", name+" updated successfully");
+		return listing(model);
+	}
+	
+	@RequestMapping("/erase/{id}")
+	public String erasing(Model model,@PathVariable("id") Integer id)
+	{
+		System.out.println("REceived id "+id);
+		
+		if(serv.multipleDelete(id).equals("done")) 
+		{
+			String msg= eserv.remove(id);
+			model.addAttribute("msg", msg);
+		}
+		return listing(model);
+	}
+	
 }

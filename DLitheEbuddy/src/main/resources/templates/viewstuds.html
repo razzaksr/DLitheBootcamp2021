@@ -23,9 +23,23 @@
 				<tbody class="bg-dark text-light text-center">
 					<tr th:each="tmp:${people}">
 						<td th:text="${tmp.getStudentId()}"></td><td th:text="${tmp.getStudentName()}"></td>
-						<td th:text="${tmp.getEvent().getEventName()}"></td><td th:text="${tmp.getStudentOrg()}"></td>
-						<td th:text="${tmp.getStudentContact()}"></td><td th:text="${tmp.getStudentEmail()}"></td>
-						<td th:text="${tmp.getStudentCeriticate()}"></td>
+						<td>
+							<a th:href="@{'/del/'+${tmp.getStudentId()}}">
+								<p th:text="${tmp.getEvent().getEventName()}"></p>
+							</a>
+						</td>
+						<td th:text="${tmp.getStudentOrg()}"></td>
+						<td th:text="${tmp.getStudentContact()}"></td>
+						<td>
+							<a th:href="@{'/editstudent/'+${tmp.getStudentId()}}">
+								<p th:text="${tmp.getStudentEmail()}"></p>
+							</a>
+						</td>
+						<td>
+							<a th:href="@{'/offer/'+${tmp.getStudentId()}}">
+								<p th:text="${tmp.getStudentCeriticate()}"></p>
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Enroll Participants</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container">
+		<h1 class="text-info text-center mb-lg-4">Edit Participant</h1>
+		<p th:text="${info}"></p>
+		<div class="row justify-content-center">
+			<form method="post" class="form rounded shadow col-md-6 col-lg-10 col-sm-12 p-5" th:action="@{/stuedit}" action="#" th:object=${student}>
+					<div class="form-group">
+						<label for="event">Enrolled Event</label>
+						<input type="number" th:field="*{event.eventId}" placeholder="Event id" class="form-control" readonly="readonly">
+					</div>
+					<div class="form-group">
+						<label for="studentId">Student ID</label>
+						<input type="number" th:field="*{studentId}" placeholder="Event id" class="form-control" readonly="readonly">
+					</div>
+					<div class="form-group">
+						<label for="studentName">Name of the Student</label>
+						<input type="text" th:field="*{studentName}" placeholder="Student Name here" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="studentOrg">Organization</label>
+						<input type="text" th:field="*{studentOrg}" placeholder="Student Org here" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="studentContact">Contact Number</label>
+						<input type="text" th:field="*{studentContact}" placeholder="Student contact" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="studentEmail">Email</label>
+						<input type="text" th:field="*{studentEmail}" placeholder="Email address" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="studentCeriticate">Certification status</label>
+						<input type="text" th:field="*{studentCeriticate}" placeholder="Student Certificate status" class="form-control" readonly="readonly">
+					</div>
+					<div class="row justify-content-around">
+						<button class="btn btn-outline-info badge-pill">Update</button>
+						<button class="btn btn-outline-danger badge-pill">Reset</button>
+					</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
