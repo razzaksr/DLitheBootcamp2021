@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="ISO-8859-1">
 <title>Viewing Events</title>
@@ -11,6 +11,10 @@
 </head>
 <body>
 	<div class="container-fluid">
+		<p class="text-primary display-4">[[${#httpServletRequest.remoteUser}]]</p>
+		<form th:action="@{/logout}" method="post">
+			<input class="btn btn-outline-dark" type="submit" value="Logout" />
+		</form>
 		<p class="text-center text-success" th:text="${msg}"></p>
 		<div class="row justify-content-center">
 			<table class="col-md-6 col-lg-8 col-sm-12 table table-stripped table-responsive border rounded shadow-lg">

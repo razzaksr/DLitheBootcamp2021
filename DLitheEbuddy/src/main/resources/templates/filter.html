@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="ISO-8859-1">
 <title>Filtering Events</title>
@@ -11,6 +11,10 @@
 </head>
 <body>
 	<div class="conatiner">
+		<p class="text-primary display-4">[[${#httpServletRequest.remoteUser}]]</p>
+		<form th:action="@{/logout}" method="post">
+		    <input class="btn btn-outline-dark" type="submit" value="Logout" />
+		</form>
 		<h1 class="display-4">Filtering Events</h1>
 		<div class="row justify-content-center">
 			<form class="col-md-8 col-sm-12 rounded shadow-lg border p-lg-5" th:action="@{/filter}" method="post">

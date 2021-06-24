@@ -50,4 +50,9 @@ public class StudentsService
 	{
 		return srepo.findById(id).orElse(new Students());
 	}
+	
+	public List<Students> getAll()
+	{
+		return srepo.findAll();
+	}
 }

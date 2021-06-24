@@ -30,8 +30,14 @@ public class EbuddyWebController
 	@RequestMapping("/")
 	public String open()
 	{
-		eserv.alterStatus();
 		return "index";
+	}
+	
+	@RequestMapping("/home")
+	public String home()
+	{
+		eserv.alterStatus();
+		return "home";
 	}
 	
 	@RequestMapping("/neweve")

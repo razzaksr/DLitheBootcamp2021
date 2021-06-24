@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="ISO-8859-1">
 <title>New Event By DLithe</title>
@@ -11,6 +11,10 @@
 </head>
 <body>
 <div class="container-fluid">
+	<p class="text-primary display-4">[[${#httpServletRequest.remoteUser}]]</p>
+	<form th:action="@{/logout}" method="post">
+		<input class="btn btn-outline-dark" type="submit" value="Logout" />
+	</form>
 	<h1 class="display-4 text-center text-success">New Event</h1>
 	<p th:text="${eve}"></p>
 	<div class="row justify-content-center">
